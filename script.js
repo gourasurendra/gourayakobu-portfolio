@@ -166,8 +166,14 @@ if (typedText) {
   typeEffect();
 }
 
+function closeModal() {
+  modal.classList.remove("show");
+}
+
+
+
 const openCertificatesBtn = document.getElementById("open-certificates");
-const openProjectsBtn = document.getElementById("open-projects");
+
 const modal = document.getElementById("certModal");
 const closeBtn = document.querySelector(".close-modal");
 const certList = document.querySelector(".cert-list");
@@ -178,12 +184,8 @@ function openModal() {
   modal.classList.add("show");
 }
 
-function closeModal() {
-  modal.classList.remove("show");
-}
 
 openCertificatesBtn.addEventListener("click", openModal);
-openProjectsBtn.addEventListener("click", openModal);
 closeBtn.addEventListener("click", closeModal);
 
 modal.addEventListener("click", (e) => {
@@ -199,3 +201,11 @@ upCertBtn.addEventListener("click", () => {
 downCertBtn.addEventListener("click", () => {
   certList.scrollBy({ top: 260, behavior: "smooth" });
 });
+
+if (openCertificatesBtn) {
+  openCertificatesBtn.addEventListener("click", openModal);
+}
+
+if (openProjectsBtn) {
+  openProjectsBtn.addEventListener("click", openModal);
+}
