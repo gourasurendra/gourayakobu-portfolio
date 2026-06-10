@@ -7,6 +7,7 @@ function gtag() {
 gtag("js", new Date());
 gtag("config", "G-V1RT2PZNVN");
 
+// 1. Scroll Reveal Observer
 const reveals = document.querySelectorAll(".reveal");
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
@@ -18,6 +19,7 @@ const observer = new IntersectionObserver((entries) => {
 
 reveals.forEach((el) => observer.observe(el));
 
+// 2. Navigation Scroll Behavior (Hide on Scroll Down, Show on Scroll Up)
 const nav = document.querySelector(".nav");
 let lastScrollY = window.scrollY;
 
@@ -39,6 +41,7 @@ window.addEventListener("scroll", () => {
   lastScrollY = currentScrollY;
 });
 
+// 3. Dynamic Section Active Link State
 const sections = document.querySelectorAll("section, .hero");
 const menuLinks = document.querySelectorAll(".menu a");
 
@@ -57,7 +60,8 @@ const sectionObserver = new IntersectionObserver((entries) => {
 
 sections.forEach((section) => sectionObserver.observe(section));
 
-const navHeight = nav.offsetHeight + 20;
+// 4. Smooth Scrolling with Nav Height Offset
+const navHeight = nav ? nav.offsetHeight + 20 : 80;
 document.querySelectorAll(".menu a, .talk-btn").forEach((link) => {
   link.addEventListener("click", (e) => {
     const href = link.getAttribute("href");
@@ -72,6 +76,7 @@ document.querySelectorAll(".menu a, .talk-btn").forEach((link) => {
   });
 });
 
+// 5. Parallax Hero Image Effect
 const parallaxImg = document.querySelector(".parallax-img");
 window.addEventListener("scroll", () => {
   const scrolled = window.pageYOffset;
@@ -80,25 +85,30 @@ window.addEventListener("scroll", () => {
   }
 });
 
+// 6. Back To Top Button
 const backToTopBtn = document.querySelector(".back-to-top");
-window.addEventListener("scroll", () => {
-  if (window.pageYOffset > 400) {
-    backToTopBtn.classList.add("show");
-  } else {
-    backToTopBtn.classList.remove("show");
-  }
-});
+if (backToTopBtn) {
+  window.addEventListener("scroll", () => {
+    if (window.pageYOffset > 400) {
+      backToTopBtn.classList.add("show");
+    } else {
+      backToTopBtn.classList.remove("show");
+    }
+  });
 
-backToTopBtn.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
 
+// 7. Interactive Cursor Glow (Interactive Backdrops)
 const cursorGlow = document.querySelector(".cursor-glow");
 window.addEventListener("mousemove", (e) => {
   if (!cursorGlow) return;
   cursorGlow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
 });
 
+// 8. Magnetic Button Hover Interaction
 const magneticElements = document.querySelectorAll(".btn, .talk-btn");
 magneticElements.forEach((el) => {
   el.classList.add("magnetic");
@@ -115,6 +125,7 @@ magneticElements.forEach((el) => {
   });
 });
 
+// 9. Fine Interactive Mouse Trail Particle Effect
 let lastTrailTime = 0;
 window.addEventListener("mousemove", (e) => {
   const now = Date.now();
@@ -130,6 +141,7 @@ window.addEventListener("mousemove", (e) => {
   setTimeout(() => particle.remove(), 800);
 });
 
+// 10. Auto-typing Headline Subtitles Effect
 const roles = [
   "Frontend Developer",
   "Security Engineer",
@@ -166,46 +178,69 @@ if (typedText) {
   typeEffect();
 }
 
-function closeModal() {
-  modal.classList.remove("show");
-}
-
-
-
-const openCertificatesBtn = document.getElementById("open-certificates");
-
+// 11. Certificates & Project Modals Controller
 const modal = document.getElementById("certModal");
+const openCertificatesBtn = document.getElementById("open-certificates");
 const closeBtn = document.querySelector(".close-modal");
-const certList = document.querySelector(".cert-list");
-const upCertBtn = document.querySelector(".cert-scroll-btn.up");
-const downCertBtn = document.querySelector(".cert-scroll-btn.down");
 
+const projectModal = document.getElementById("projectModal");
+const openProjectsBtn = document.getElementById("open-projects");
+const closeProjectBtn = document.querySelector(".close-project-modal");
+
+// Certificate Modal States
 function openModal() {
-  modal.classList.add("show");
+  if (modal) modal.classList.add("show");
 }
 
+function closeModal() {
+  if (modal) modal.classList.remove("show");
+}
 
-openCertificatesBtn.addEventListener("click", openModal);
-closeBtn.addEventListener("click", closeModal);
+// Project Modal States
+function openProjectModal() {
+  if (projectModal) projectModal.classList.add("add"); // or .classList.add("show") depending on your styling
+  if (projectModal) projectModal.classList.add("show");
+}
 
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    closeModal();
-  }
-});
+// Keep it simple and match your original .show implementation:
+function openProjectModal() {
+  if (projectModal) projectModal.classList.add("show");
+}
 
-upCertBtn.addEventListener("click", () => {
-  certList.scrollBy({ top: -260, behavior: "smooth" });
-});
+function closeProjectModal() {
+  if (projectModal) projectModal.classList.remove("show");
+}
 
-downCertBtn.addEventListener("click", () => {
-  certList.scrollBy({ top: 260, behavior: "smooth" });
-});
-
+// Certificate Event Listeners
 if (openCertificatesBtn) {
   openCertificatesBtn.addEventListener("click", openModal);
 }
 
+if (closeBtn) {
+  closeBtn.addEventListener("click", closeModal);
+}
+
+if (modal) {
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+}
+
+// Project Event Listeners
 if (openProjectsBtn) {
-  openProjectsBtn.addEventListener("click", openModal);
+  openProjectsBtn.addEventListener("click", openProjectModal);
+}
+
+if (closeProjectBtn) {
+  closeProjectBtn.addEventListener("click", closeProjectModal);
+}
+
+if (projectModal) {
+  projectModal.addEventListener("click", (e) => {
+    if (e.target === projectModal) {
+      closeProjectModal();
+    }
+  });
 }
